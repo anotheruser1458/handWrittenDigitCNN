@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(255, 160, 160);
+  }
+
+.mainContainer {
+    display: flex;
+}
+
+.mainContainer img {
+    height: 400px;
+}
+
+.canvasContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.canvasContainer {
+    width: 50vw;
+    height: 50vh;
+    background: green;
+}
+
+#canvas {
+    height: 300px;
+    width: 300px;
+}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<header>
+  <h1>Image Classification Neural Network</h1>
+  <h2>Hand Written Digits</h2>
+</header>
+
+{% if prediction %}
+  <script>
+    alert("Prediction: {{ prediction }}")
+  </script>
+{% endif %}
+<main class="mainContainer">
+  <img src="{% static 'robot-face.png' %}">
+  <section class="canvasContainer">
+    <p>A Convolutional Neural Network trained on a keras dataset of 70,000 grayscale handwritten digits. This CNN can guess hand written digits (and digits drawn on a computer) with 97% accuracy. Give it a shot!</p>
+    <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
+    <button type="button" id="draw" onclick="saveImage()">Submit</button>
+  </section>
+
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- <script src="{% static 'js/draw.js' %}"></script> -->
+<script>
+  canvas = document.querySelector("#canvas")
+
+// get canvas 2D context and set him correct size
+var ctx = canvas.getContext('2d');
+ctx.canvas.width = 300;
+ctx.canvas.height = 300;
+// last known position
+var pos = { x: 0, y: 0 };
+
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+
+
+// new position from mouse event
+function setPosition(e) {
+    rect = canvas.getBoundingClientRect();
+    x = rect.x;
+    y = rect.y;
+    pos.x = e.clientX - x;
+    pos.y = e.clientY - y;
+}
+
+function draw(e) {
+  // mouse left button must be pressed
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'black';
+
+  ctx.moveTo(pos.x, pos.y); // from
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); // to
+
+  ctx.stroke(); // draw it!
+}
+
+function createWhiteBackground() {
+    var imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+    var data=imgData.data;
+    for(var i=0;i<data.length;i+=4){
+        if(data[i+3]<255){
+            data[i]=255;
+            data[i+1]=255;
+            data[i+2]=255;
+            data[i+3]=255;
+        }
+    }
+    ctx.putImageData(imgData,0,0);
+}
+
+function saveImage() {
+    createWhiteBackground()
+    dataURI = canvas.toDataURL()
+    postImageData(dataURI)
+}
+
+function postImageData(uri) {
+    $.post("", {
+        img:uri,
+        csrfmiddlewaretoken: String('{{ csrf_token }}'),
+    }, function(response){
+      $("body").html(response)
+    });
+}
+</script>
+{% endblock content %}

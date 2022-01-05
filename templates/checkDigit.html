@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid" align="center">
+
+        <br>
+            <h4>Guess #<b id="guessNum">{{ digit.pk }}</b></h4>
+    <h1 style="color:rgb(23, 162, 184)">Did Sonny guess correctly?</h1>
+            <h2>Guess: {{ digit.guess }}</h2>
+            <img src="{% url 'check' %}" class="responsive">
+        <br>
+    <br>
+                <button id="right" type="button" class="btn btn-success btn-lg">Correct</button>
+                <button id="wrong" type="button" class="btn btn-danger btn-lg">Incorrect</button>
+<br>
+</div>
+
+
+</body>
+<script>
+
+    $(document).ready(function(){
+       var guessNum =  $("#guessNum").text();
+
+       // deploy setting
+       var url = "https://hwddeploy456.herokuapp.com/api/v1/correct/";
+       var guessVerifiedApi = "https://hwddeploy456.herokuapp.com/api/v1/guessVerified/";
+
+       // test settings
+       //var url = "http://127.0.0.1:8000/api/v1/correct/";
+       //var guessVerifiedApi = "http://127.0.0.1:8000/api/v1/guessVerified/";
+
+
+       var slash = "/";
+       var guessUrl = url.concat(guessNum, slash);
+       var guessVerifiedUrl = guessVerifiedApi.concat(guessNum, slash);
+
+//if right, put request to api, change obj to right
+//redirect to homepage
+       $("#right").click(function(){
+
+
+        $.ajax({
+        url:guessUrl,
+        type: "PUT",
+        data:{correct:true, guessVerified:true, processed:true},
+        success: function(response) {
+            window.location.href = "{% url 'newHome' %}";
+        },
+        });
+
+        });
+
+//if wrong, redirect to homepage
+        $("#wrong").click(function(){
+
+            //guessVerified api call
+            $.ajax({
+            url:guessVerifiedUrl,
+            type: "PUT",
+            data:{guessVerified:true},
+            success: function(response) {
+
+            window.location.href = "{% url 'newHome' %}";
+            }
+
+            });
+        });
+    });
+
+</script>
+
+{% endblock content %}
