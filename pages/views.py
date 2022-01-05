@@ -17,3 +17,4 @@ def newHome(request):
         prediction = json.loads(response.text)['prediction']
         return render(request, 'home.html',{'prediction':prediction})
     return render(request, 'home.html',{})
+    
