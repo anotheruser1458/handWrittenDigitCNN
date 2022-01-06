@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<header>
+<header class="homeHeader">
   <h1>Image Classification Neural Network</h1>
   <h2>Hand Written Digits</h2>
 </header>
@@ -13,13 +13,15 @@
   </script>
 {% endif %}
 <main class="mainContainer">
-  <img src="{% static 'robot-face.png' %}">
-  <section class="canvasContainer">
-    <p>A Convolutional Neural Network trained on a keras dataset of 70,000 grayscale handwritten digits. This CNN can guess hand written digits (and digits drawn on a computer) with 97% accuracy. Give it a shot!</p>
+  <section class="subContainer">
+    <img src="{% static 'robot-face.png' %}">
+    <h3>Use the mouse to draw a single digit 0-9 and a prediction will be made.</h3>
+    <p>A Convolutional Neural Network trained on a keras dataset of 70,000 grayscale handwritten digits. This CNN can guess hand written digits.</p>
+  </section>
+  <section class="subContainer">
     <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
     <button type="button" id="draw" onclick="saveImage()">Submit</button>
   </section>
-
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- <script src="{% static 'js/draw.js' %}"></script> -->
@@ -28,8 +30,9 @@
 
 // get canvas 2D context and set him correct size
 var ctx = canvas.getContext('2d');
-ctx.canvas.width = 300;
-ctx.canvas.height = 300;
+ctx.canvas.width = 500;
+ctx.canvas.height = 500;
+
 // last known position
 var pos = { x: 0, y: 0 };
 
@@ -45,6 +48,7 @@ function setPosition(e) {
     y = rect.y;
     pos.x = e.clientX - x;
     pos.y = e.clientY - y;
+    console.log(x, y)
 }
 
 function draw(e) {

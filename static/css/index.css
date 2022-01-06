@@ -8,26 +8,66 @@ body {
     background-color: rgb(255, 160, 160);
   }
 
+.homeHeader {
+    text-align: center;
+    padding-top: 2vh;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding-bottom: 3vh;
+}
+
+.homeHeader h1{
+    font-size: 3rem;
+}
+
+.homeHeader h2 {
+    font-size: 2.5rem;
+}
+  
 .mainContainer {
     display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-.mainContainer img {
-    height: 400px;
+.subContainer img {
+    height: 300px;
+    margin-bottom: 1vh;
+    filter: drop-shadow(-2px 0px 19px rgb(247,96,66));
 }
 
-.canvasContainer {
+.subContainer {
     display: flex;
     flex-direction: column;
+    width: 500px;
+    align-items: center;
+    margin-top: 2vh;
 }
 
-.canvasContainer {
-    width: 50vw;
-    height: 50vh;
-    background: green;
+.subContainer h3 {
+    font-size: 1.5rem;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.subContainer p {
+    font-size: 1.2rem;
+    margin-top: 1vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+.subContainer button {
+    background: rgb(65,224,235);
+    width: 100px;
+    height: 50px;
+    border: solid 2px black;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
 #canvas {
-    height: 300px;
-    width: 300px;
+    height: 500px;
+    width: 500px;
+    margin-bottom: 2vh;
+    filter: drop-shadow(-2px 0px 19px rgb(247,96,66));
 }
