@@ -7,16 +7,12 @@
   <h2>Hand Written Digits</h2>
 </header>
 
-{% if prediction %}
-  <script>
-    alert("Prediction: {{ prediction }}")
-  </script>
-{% endif %}
 <main class="mainContainer">
   <section class="subContainer">
     <img src="{% static 'robot-face.png' %}">
     <h3>Use the mouse to draw a single digit 0-9 and a prediction will be made.</h3>
     <p>A Convolutional Neural Network trained on a keras dataset of 70,000 grayscale handwritten digits. This CNN can guess hand written digits.</p>
+    <div style="display:none;" class="loader"></div>
   </section>
   <section class="subContainer">
     <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
@@ -24,9 +20,10 @@
   </section>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- <script src="{% static 'js/draw.js' %}"></script> -->
+<script src="{% static 'js/loader.js' %}"></script>
 <script>
-  canvas = document.querySelector("#canvas")
+canvas = document.querySelector("#canvas")
+loader = document.querySelector(".loader")
 
 // get canvas 2D context and set him correct size
 var ctx = canvas.getContext('2d');
@@ -48,7 +45,6 @@ function setPosition(e) {
     y = rect.y;
     pos.x = e.clientX - x;
     pos.y = e.clientY - y;
-    console.log(x, y)
 }
 
 function draw(e) {
@@ -83,6 +79,7 @@ function createWhiteBackground() {
 }
 
 function saveImage() {
+    toggleLoader()
     createWhiteBackground()
     dataURI = canvas.toDataURL()
     postImageData(dataURI)
@@ -96,5 +93,10 @@ function postImageData(uri) {
       $("body").html(response)
     });
 }
+
+"{% if prediction %}"
+    alert("Prediction: {{ prediction }}");
+"{% endif %}"
+
 </script>
 {% endblock content %}
