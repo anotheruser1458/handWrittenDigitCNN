@@ -9,7 +9,7 @@ The tfTest folder contains all the code related to training and testing the mode
 ### Training the Model
 A TensorFlow sequential model was trained using 70,000 pixel arrays (28x28) which correspond to a 28x28 pixel image on a person's hand written digit. Each array element shows how light or dark a specific pixel is on the 28x28 image, depicted as a value somewhere between 0 and 1.
 
-
+<em>tfTest/trainModel.py</em>
 The training data is split into two randomized sets: a training set of 60,000 arrays and a testing set of 10,000 arrays.
 ```python
 import tensorflow as tf
