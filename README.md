@@ -102,8 +102,7 @@ import tempfile
 model = None
 ```
 
-download_from_bucket function which can download blobs from an associated project bucket. This was very easy to do from a networking stand point because all GCP functions have an environment variable called 'GOOGLE_APPLICATION_CREDENTIALS', which contains all authentication information, and is automatically loaded by the google.cloud.storage client. It just works.
-
+download_from_bucket function which can download blobs from an associated project bucket. This was very easy to do from a networking stand point because all GCP functions have an environment variable called 'GOOGLE_APPLICATION_CREDENTIALS', which contains all authentication information and is automatically loaded by the google.cloud.storage client. It just works.
 ```python
 def download_from_bucket(bucketName, blobName, fileDestination):
     try:
@@ -115,6 +114,39 @@ def download_from_bucket(bucketName, blobName, fileDestination):
     except:
       print("Download failed")
  ```
+
+Main function that is called when an API request is made. Variables initialized and the model is checked. If there is no model, then download the weighs into the tmp folder and initialize it.
+```python
+def sonny_hwd(request):
+    global model
+    response = {}
+    if model == None:
+      download_from_bucket("sonny-bucket", "weights/hwdWeights.data-00000-of-00001", "/tmp/hwdWeights.data-00000-of-00001")
+      download_from_bucket("sonny-bucket", "weights/hwdWeights.index", "/tmp/hwdWeights.index")
+      model = tf.keras.models.Sequential()
+      model.add(tf.keras.layers.Flatten(input_shape=(28,28)))
+      model.add(tf.keras.layers.Dense(units=128, activation='relu'))
+      model.add(tf.keras.layers.Dense(units=128, activation='relu'))
+      model.add(tf.keras.layers.Dense(units=128, activation='relu'))
+      model.add(tf.keras.layers.Dense(units=10, activation=tf.nn.softmax))
+      model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+      model.load_weights('/tmp/hwdWeights')
+```
+
+Once there is a working model, retrieve the request payload and covert it to json. Read the string data which is delimited by commas and convert every string to an integer.
+```python
+    request_json = request.get_json()
+    image = request_json['image'].split(",")
+    image = [int(x) for x in image]
+```
+
+Convert the python list into an np array and reshape to be 28x28. Pass the np array to the model and return the prediction in a json response. The cloud function will automatically add the return value from the function to the payload of the HTTP response.
+```python
+    image = np.array(image).reshape((1, 28, 28))
+    prediction = np.argmax(model.predict(image))
+    response['prediction'] = str(prediction)
+    return json.dumps(response)
+```
 
 
 ## Web Server
