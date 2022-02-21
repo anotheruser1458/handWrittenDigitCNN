@@ -84,6 +84,21 @@ Cloud functions are a great way to bring RESTful functionality to any small scri
 The weights saved in a Google Cloud Storage Bucket.
 ![image](https://user-images.githubusercontent.com/74911365/155038387-c4bcfcc0-446b-4a42-8d76-48c439bab87a.png)
 
+### Function
+This is the function's source code which lives in the cloud. The function's primary objective is to recieve pixel data via an HTTP request, and return the model's prediction.
+
+Imports and a global model variable which is set to None (it will later be assigned to the actual TF model after it is initialized).
+
+```python
+import tensorflow as tf
+from google.cloud import storage
+import json
+import numpy as np
+import os
+import tempfile
+
+model = None
+```
 
 ## Web Server
 
