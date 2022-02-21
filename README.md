@@ -63,7 +63,16 @@ Use opencv to read the image into memory and invert it to have black pixels show
 image = cv.imread('testData/digit.png')[:, :, 0]
 image = np.invert(np.array([image]))
 ```
-The image will now look like this to the computer:
+The image will now look like this to the computer: <br>
+![ksnip_20220221-130108](https://user-images.githubusercontent.com/74911365/155035882-9000bc24-7ef7-4809-8fac-776f8731fbb3.png)
+
+Pass the inverted pixel array to the model and display the prediction.
+
+```python
+prediction = model.predict(image)
+print('Interpretation: {}'.format(np.argmax(prediction)))
+```
+![ksnip_20220221-125833](https://user-images.githubusercontent.com/74911365/155035705-8a1161e7-c991-4b9d-b0a3-f6a6f12c27c9.png)
 
 
 ## Deploy to Google Cloud Platform Function
