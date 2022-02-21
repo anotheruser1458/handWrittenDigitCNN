@@ -7,7 +7,7 @@ This is a personal project which involved training a TensorFlow neural network t
 ## Model Training
 The tfTest folder contains all the code related to training and testing the model. Below are the steps I took to ensure the model worked properly before deploying it to the cloud.
 ### Training the Model
-A TensorFlow sequential model was trained using 70,000 pixel arrays (28x28) which correspond to a 28x28 pixel image on a person's hand written digit. Each array element shows how light or dark a specific pixel is on the 28x28 image, depicted as a value somewhere between 0 and 1.
+A TensorFlow sequential model was trained using 70,000 pixel arrays (28x28) which correspond to a 28x28 pixel image of a person's hand written digit. Each array element shows how light or dark a specific pixel is on the 28x28 image, depicted as a value somewhere between 0 and 1.
 
 <strong><em>tfTest/trainModel.py</em></strong>
 <br>
@@ -41,6 +41,30 @@ model.fit(X_train, Y_train, epochs=4)
 loss, accuracy = model.evaluate(X_test, Y_test)
 print(accuracy)
 ```
+### Testing Real Images
+I drew a digit and resized it to 28x28 using GNU's Image Manipulation Program (GIMP). Using the opencv-python package, the digit image file was read into memory and converted to an np array. The np array is passed to the model and a prediction is made and displayed using pyplot.
+
+<strong><em>tfTest/loadModelTest.py</em></strong>
+<br>
+Draw an image on any drawing software and save it to the project directory. The digit must be black and must have a white background and resized to 28x28. 
+![digit](https://user-images.githubusercontent.com/74911365/155035147-469400cc-8d17-4e8b-b6e0-02852cbb5cdf.png)
+
+Add imports and load the model (loading the model allows you to use it without having to train it again).
+```python
+import tensorflow as tf
+import numpy as np
+import cv2 as cv
+import matplotlib.pyplot as plt
+model = tf.keras.models.load_model("model")
+```
+Use opencv to read the image into memory and invert it to have black pixels show white, and white pixels show as black.
+```python
+image = cv.imread('testData/digit.png')[:, :, 0]
+image = np.invert(np.array([image]))
+```
+The image will now look like this to the computer:
+
+
 ## Deploy to Google Cloud Platform Function
 
 ## Web Server
