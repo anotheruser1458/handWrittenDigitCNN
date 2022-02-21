@@ -7,6 +7,10 @@ This is a personal project which involved training a TensorFlow neural network t
 ## Model Training
 The tfTest folder contains all the code related to training and testing the model. Below are the steps I took to ensure the model worked properly before deploying it to the cloud.
 ### Training the Model
+A TensorFlow sequential model was trained using 70,000 pixel arrays (28x28) which correspond to a 28x28 pixel image on a person's hand written digit. Each array element shows how light or dark a specific pixel is on the 28x28 image, depicted as a value somewhere between 0 and 1.
+
+
+The training data is split into two randomized sets: a training set of 60,000 arrays and a testing set of 10,000 arrays.
 ```python
 import tensorflow as tf
 
@@ -16,13 +20,20 @@ mnist = tf.keras.datasets.mnist
 (X_train, Y_train),(X_test, Y_test) = mnist.load_data()
 X_train = tf.keras.utils.normalize(X_train)
 X_test = tf.keras.utils.normalize(X_test)
+```
 
+The model is initialized using the 'relu' activation function and form fitted to intake the 28x28 flattened pixel array. 
+```python
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Flatten(input_shape=(28,28)))
 model.add(tf.keras.layers.Dense(units=128, activation='relu'))
 model.add(tf.keras.layers.Dense(units=128, activation='relu'))
 model.add(tf.keras.layers.Dense(units=128, activation='relu'))
 model.add(tf.keras.layers.Dense(units=10, activation=tf.nn.softmax))
+```
+
+The model is compiled and fit to the training data and then evaluated with the test data.
+```python
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 model.fit(X_train, Y_train, epochs=4)
 
