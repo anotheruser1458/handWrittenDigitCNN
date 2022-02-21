@@ -75,7 +75,7 @@ print('Interpretation: {}'.format(np.argmax(prediction)))
 ![ksnip_20220221-125833](https://user-images.githubusercontent.com/74911365/155035705-8a1161e7-c991-4b9d-b0a3-f6a6f12c27c9.png)
 
 
-## Deploy to Google Cloud Platform Function
+## Deploy to Google Cloud Platform (GCP) Function
 The challenges associated with deploying a custom TensorFlow model to the cloud are discussed here. I started off with a trained and tested model. The end state is a RESTful Web API that can recieve HTTP POST requests containing image pixel data, and returns the model's prediction of what digit that pixel data represents.
 
 ### Saving the Weights in Cloud Storage
@@ -87,6 +87,8 @@ The weights saved in a Google Cloud Storage Bucket.
 ### Function
 This is the function's source code which lives in the cloud. The function's primary objective is to recieve pixel data via an HTTP request, and return the model's prediction.
 
+<strong><em>tfTest/googleCloudFunction.py</em></strong>
+<br>
 Imports and a global model variable which is set to None (it will later be assigned to the actual TF model after it is initialized).
 
 ```python
@@ -99,6 +101,21 @@ import tempfile
 
 model = None
 ```
+
+download_from_bucket function which can download blobs from an associated project bucket. This was very easy to do from a networking stand point because all GCP functions have an environment variable called 'GOOGLE_APPLICATION_CREDENTIALS', which contains all authentication information, and is automatically loaded by the google.cloud.storage client. It just works.
+
+```python
+def download_from_bucket(bucketName, blobName, fileDestination):
+    try:
+      storage_client = storage.Client()
+      bucket = storage_client.get_bucket(bucketName)
+      blob = bucket.blob(blobName)
+      blob.download_to_filename(fileDestination)
+      print("Blob {} downloaded to {}.".format(blobName, fileDestination))
+    except:
+      print("Download failed")
+ ```
+
 
 ## Web Server
 
