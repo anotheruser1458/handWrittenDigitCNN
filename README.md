@@ -47,7 +47,8 @@ I drew a digit and resized it to 28x28 using GNU's Image Manipulation Program (G
 <strong><em>tfTest/loadModelTest.py</em></strong>
 <br>
 Draw an image on any drawing software and save it to the project directory. The digit must be black and must have a white background and resized to 28x28. 
-![digit](https://user-images.githubusercontent.com/74911365/155035147-469400cc-8d17-4e8b-b6e0-02852cbb5cdf.png)
+<br>
+![ksnip_20220221-125412](https://user-images.githubusercontent.com/74911365/155035435-1ffa50fb-8f0a-42cb-982c-f5c61667f2e5.png)
 
 Add imports and load the model (loading the model allows you to use it without having to train it again).
 ```python
