@@ -76,6 +76,10 @@ print('Interpretation: {}'.format(np.argmax(prediction)))
 
 
 ## Deploy to Google Cloud Platform Function
+The challenges associated with deploying a custom TensorFlow model to the cloud are discussed here. I started off with a trained and tested model. The end state is a RESTful Web API that can recieve HTTP POST requests containing image pixel data, and returns the model's prediction of what digit that pixel data represents.
+
+### Saving the Weights in Cloud Storage
+Cloud functions are a great way to bring RESTful functionality to any small script or program. Cloud functions often only have access to small amounts of volatile memory, which can't store a saved model indefinitly. Everytime the function's memory resets (which happens during periods of inactivity) the model needs to be recreated. To achieve this, the weights of the model needed to be saved and stored in non-volatile memory (Google Cloud Storage). This allowed the function to initialize itself by downloading the weights and creating the model after every time the function memory reset.
 
 ## Web Server
 
