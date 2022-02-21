@@ -1,9 +1,4 @@
-#change digit.png with hand drawn digit, 28x28 pixels
-import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
-import cv2 as cv
-import PIL
 
 #Train Model
 mnist = tf.keras.datasets.mnist
@@ -23,14 +18,3 @@ model.fit(X_train, Y_train, epochs=4)
 
 loss, accuracy = model.evaluate(X_test, Y_test)
 print(accuracy)
-
-#Load model test and prediction test
-model = tf.keras.models.load_model("model")
-model.save_weights("hwdWeights")
-image = cv.imread('digit.png')[:, :, 0]
-image = np.invert(np.array([image]))
-prediction = model.predict(image)
-print('Interpretation: {}'.format(np.argmax(prediction)))
-plt.imshow(image[0])
-plt.show()
-
