@@ -9,8 +9,8 @@ This is a personal project which involved training a TensorFlow neural network t
 - [Deploy to Google Cloud Platform (GCP) Function](#deploy-to-google-cloud-platform--gcp--function)
   * [Saving the Weights in Cloud Storage](#saving-the-weights-in-cloud-storage)
   * [Function](#function)
-  * [Web Application Frontend](#web-application-frontend)
-  * [Web Application Backend](#web-application-backend)
+- [Web Application Frontend](#web-application-frontend)
+- [Web Application Backend](#web-application-backend)
 - [Deploy to Heroku](#deploy-to-heroku)
 
 # Usage
@@ -161,7 +161,7 @@ Convert the python list into an np array and reshape to be 28x28. Pass the np ar
 ```
 <!-- The web application's objective is to create an interface for users to draw a digit with their mouse and then display the digit that the model thinks it sees.  -->
 
-## Web Application Frontend
+# Web Application Frontend
 The frontend's objective is to inform users of the functionality of the app and the neural network's capabilities. It also provides an interface (an html canvas) which allows users to draw a number with their mouse, and submit the drawing to the model. Below is an explanation of how the canvas interface was created.
 
 <strong><em>templates/home.html</em></strong>
@@ -259,7 +259,7 @@ function postImageData(uri) {
 }
 ```
 
-## Web Application Backend
+# Web Application Backend
 The backend's objective is to serve the static files to users, capture and clean the canvas data, send the cleaned data to the cloud function, and return the model's prediction back to the frontend.
 
 <strong><em>pages/views.py</em></strong>
