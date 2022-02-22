@@ -16,7 +16,7 @@ This is a personal project which involved training a TensorFlow neural network t
 # Usage
 Use the mouse to draw a digit on the canvas and click submit. In a few seconds, the model's prediction of what digit it thinks you drew will pop up in a box at the top of the screen. <br>
 
-<img src="https://user-images.githubusercontent.com/74911365/155048020-5409c5b0-dab5-486c-9bcc-08a3561c39eb.mp4">
+![ksnip_20220221-125412](https://user-images.githubusercontent.com/74911365/155048020-5409c5b0-dab5-486c-9bcc-08a3561c39eb.mp4)
 
 # Model Training
 The tfTest folder contains all the code related to training and testing the model. Below are the steps I took to ensure the model worked properly before deploying it to the cloud.
