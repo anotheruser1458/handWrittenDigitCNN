@@ -1,6 +1,18 @@
 # Handwritten Digit TensorFlow Web Application
 This is a personal project which involved training a TensorFlow neural network to recognize hand written digits, deploying the model to the cloud, and creating a frontend user interface which allows people to draw their own digits with a mouse and recieve the model's prediction of what digit it thinks it sees (0-9). 
 
+# Contents
+- [Usage](#usage)
+- [Model Training](#model-training)
+  * [Training the Model](#training-the-model)
+  * [Testing Real Images](#testing-real-images)
+- [Deploy to Google Cloud Platform (GCP) Function](#deploy-to-google-cloud-platform--gcp--function)
+  * [Saving the Weights in Cloud Storage](#saving-the-weights-in-cloud-storage)
+  * [Function](#function)
+  * [Web Application Frontend](#web-application-frontend)
+  * [Web Application Backend](#web-application-backend)
+- [Deploy to Heroku](#deploy-to-heroku)
+
 # Usage
 https://user-images.githubusercontent.com/74911365/155048020-5409c5b0-dab5-486c-9bcc-08a3561c39eb.mp4
 
@@ -291,6 +303,3 @@ Heroku is the web host used for this application. A custom domain was purchased 
 
 ![image](https://user-images.githubusercontent.com/74911365/155045523-69d4445d-2d0f-412b-9cef-97e9062c8909.png)
 ![image](https://user-images.githubusercontent.com/74911365/155045591-a979166c-448b-4a47-a1b4-9e61594891c2.png)
-
-
-# Summary
