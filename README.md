@@ -14,7 +14,7 @@ This is a personal project which involved training a TensorFlow neural network t
 - [Deploy to Heroku](#deploy-to-heroku)
 
 # Usage
-Use the mouse to draw a digit on the canvas and click submit. In a few seconds, the model's prediction of what digit it thinks you drew will pop up in a box at the top of the screen. <br>
+Use the mouse to draw a digit on the canvas and click submit. In a few seconds, the model's prediction of what digit it thinks you drew will pop up in a box at the top of the screen. Try it out [here](http://www.imageguesser.xyz/). <br>
 
 https://user-images.githubusercontent.com/74911365/155085753-2fee649c-0af6-4c8a-9d80-57072a31c1fc.mp4
 
