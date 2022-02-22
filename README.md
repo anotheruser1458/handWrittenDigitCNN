@@ -157,6 +157,25 @@ HTML canvas element added to homepage (home.html)
 <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
 ```
 
+Using javascript select the canvas, and associate it's context with it's height and width (the height and width are hard coded in CSS).
+```javascript
+canvas = document.querySelector("#canvas")
+var ctx = canvas.getContext('2d');
+ctx.canvas.width = 500;
+ctx.canvas.height = 500;
+```
+
+Establish a position variable which will be updated whenever the mousemove, mousedown, and mouseenter events occur.
+```javascript
+var pos = { x: 0, y: 0 };
+
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+```
+
+
+
 ### Web Application Backend
 The backend's objective is to serve the static files to users, capture and clean the canvas data, send the cleaned data to the cloud function, and return the model's prediction back to the frontend.
 
