@@ -281,8 +281,8 @@ The image is resized, read into memory as an np array, inverted, and sent to the
         return render(request, 'home.html',{'prediction':prediction})
     return render(request, 'home.html',{})
 ```
-All the util functions used are located <strong><em>pages/utils.py</em></strong>
- in which do basically the same thing as the <strong><em>tfTest/loadModelTest.py</em></strong>
+The souce code for all the functions used are located in <strong><em>pages/utils.py</em></strong>
+ which do basically the same thing as the <strong><em>tfTest/loadModelTest.py</em></strong>
 functions discussed earlier.
 
 
