@@ -204,9 +204,48 @@ function draw(e) {
   ctx.stroke(); // draw it!
 }
 ```
-![image](https://user-images.githubusercontent.com/74911365/155043225-c01fce24-dcea-4d92-ae5f-5c1fda7e61d9.png)
+<img src="https://user-images.githubusercontent.com/74911365/155043225-c01fce24-dcea-4d92-ae5f-5c1fda7e61d9.png" width=400>
 
+When the submit button is pressed, three things then happen:
 
+All pixels on the canvas that were not changed to black by the mouse are given the white value. This is very necessary to properly process the data later on.
+```javascript
+function createWhiteBackground() {
+    var imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+    var data=imgData.data;
+    for(var i=0;i<data.length;i+=4){
+        if(data[i+3]<255){
+            data[i]=255;
+            data[i+1]=255;
+            data[i+2]=255;
+            data[i+3]=255;
+        }
+    }
+    ctx.putImageData(imgData,0,0);
+}
+```
+
+The canvas data is saved as a base64 encoded string, which is then passed to the postImageData() function.
+```javascript
+function saveImage() {
+    toggleLoader()
+    createWhiteBackground()
+    dataURI = canvas.toDataURL()
+    postImageData(dataURI)
+}
+```
+Using a jQuery, the base64 data is sent back to the webserver for further processing. (Note, the reason this had to be done in the browser and not a seperate javascript file is because Django requires a csrf_token to be passed during all post requests. Here the django template system replaces the {{ csrf_token }} with the actual token, which is necessary ofr the request to successfully complete.
+
+```javascript
+function postImageData(uri) {
+    $.post("", {
+        img:uri,
+        csrfmiddlewaretoken: String('{{ csrf_token }}'),
+    }, function(response){
+      $("body").html(response)
+    });
+}
+```
 
 ### Web Application Backend
 The backend's objective is to serve the static files to users, capture and clean the canvas data, send the cleaned data to the cloud function, and return the model's prediction back to the frontend.
