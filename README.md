@@ -234,7 +234,7 @@ function saveImage() {
     postImageData(dataURI)
 }
 ```
-Using a jQuery, the base64 data is sent back to the webserver for further processing. (Note, the reason this had to be done in the browser and not a seperate javascript file is because Django requires a csrf_token to be passed during all post requests. Here the django template system replaces the {{ csrf_token }} with the actual token, which is necessary ofr the request to successfully complete.
+Using a jQuery, the base64 data is sent back to the webserver for further processing. (Note, the reason this had to be done in the browser and not a seperate javascript file is because Django requires a csrf_token to be passed during all post requests. Here the django template system replaces the {{ csrf_token }} with the actual token, which is necessary for the request to successfully complete.
 
 ```javascript
 function postImageData(uri) {
@@ -249,6 +249,42 @@ function postImageData(uri) {
 
 ### Web Application Backend
 The backend's objective is to serve the static files to users, capture and clean the canvas data, send the cleaned data to the cloud function, and return the model's prediction back to the frontend.
+
+<strong><em>pages/views.py</em></strong>
+<br>
+The Django view, which reads in the base64 encoded string, trims off the header info, and wraps it as a bytes object.
+```python
+from django.shortcuts import render
+import base64
+from .utils import saveImage, resizeImage, readImage, sendToCloud
+import json
+
+
+def home_page(request):
+    if request.method == "POST":
+        image64 = request.POST.get("img")
+        imageStringBytes = bytes(image64[22:], 'utf-8')
+```
+
+The bytes are then decoded and saved locally in the same type of temporary storage as the cloud function.
+```python
+        imageBytes = base64.decodebytes(imageStringBytes)
+        saveImage(imageBytes)
+```
+
+The image is resized, read into memory as an np array, inverted, and sent to the cloud. Once the prediction is returned, the view injects it into the html template, which is then displayed as an alert on the web page.
+```python
+        resizeImage()
+        imageData = readImage()
+        response = sendToCloud(imageData)
+        prediction = json.loads(response.text)['prediction']
+        return render(request, 'home.html',{'prediction':prediction})
+    return render(request, 'home.html',{})
+```
+All the util functions used are located <strong><em>pages/utils.py</em></strong>
+ in which do basically the same thing as the <strong><em>tfTest/loadModelTest.py</em></strong>
+functions discussed earlier.
+
 
 ## Deploy to Heroku
 Heroku is the web host used for this application. A custom domain was purchased on namecheap.com which is now directly linked to the project. 
