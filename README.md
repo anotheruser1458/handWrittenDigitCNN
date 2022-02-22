@@ -1,9 +1,8 @@
 # Handwritten Digit TensorFlow Web Application
-Neural network trained to recognize hand written digits and deployed to a cloud and web application
-![image](https://user-images.githubusercontent.com/74911365/155045779-a3b177d5-6528-4171-8c0d-3f83ba4a2c9e.png)
-
-# Overview
 This is a personal project which involved training a TensorFlow neural network to recognize hand written digits, deploying the model to the cloud, and creating a frontend user interface which allows people to draw their own digits on screen and recieve the model's prediction of what digit it thinks it sees. 
+
+# Usage
+https://user-images.githubusercontent.com/74911365/155048020-5409c5b0-dab5-486c-9bcc-08a3561c39eb.mp4
 
 # Model Training
 The tfTest folder contains all the code related to training and testing the model. Below are the steps I took to ensure the model worked properly before deploying it to the cloud.
