@@ -157,7 +157,7 @@ HTML canvas element added to homepage.
 ```html
 <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
 ```
-![image](https://user-images.githubusercontent.com/74911365/155042928-d932fff0-efe6-4e99-bc2d-9cc2b97378d6.png)
+<img src="https://user-images.githubusercontent.com/74911365/155042928-d932fff0-efe6-4e99-bc2d-9cc2b97378d6.png" width=500>
 
 Using javascript select the canvas, and associate it's context with it's height and width (the height and width are hard coded in CSS).
 ```javascript
