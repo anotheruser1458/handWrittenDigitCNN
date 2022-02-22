@@ -1,5 +1,6 @@
-# handWrittenDigitCNN
-Neural network trained to recognize hand written digits.
+# Handwritten Digit TensorFlow Web Application
+Neural network trained to recognize hand written digits and deployed to a cloud and web application
+![image](https://user-images.githubusercontent.com/74911365/155045779-a3b177d5-6528-4171-8c0d-3f83ba4a2c9e.png)
 
 ## Overview
 This is a personal project which involved training a TensorFlow neural network to recognize hand written digits, deploying the model to the cloud, and creating a frontend user interface which allows people to draw their own digits on screen and recieve the model's prediction of what digit it thinks it sees. 
