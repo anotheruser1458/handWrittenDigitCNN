@@ -2,12 +2,12 @@
 Neural network trained to recognize hand written digits and deployed to a cloud and web application
 ![image](https://user-images.githubusercontent.com/74911365/155045779-a3b177d5-6528-4171-8c0d-3f83ba4a2c9e.png)
 
-## Overview
+# Overview
 This is a personal project which involved training a TensorFlow neural network to recognize hand written digits, deploying the model to the cloud, and creating a frontend user interface which allows people to draw their own digits on screen and recieve the model's prediction of what digit it thinks it sees. 
 
-## Model Training
+# Model Training
 The tfTest folder contains all the code related to training and testing the model. Below are the steps I took to ensure the model worked properly before deploying it to the cloud.
-### Training the Model
+## Training the Model
 A TensorFlow sequential model was trained using 70,000 pixel arrays (28x28) which correspond to a 28x28 pixel image of a person's hand written digit. Each array element shows how light or dark a specific pixel is on the 28x28 image, depicted as a value somewhere between 0 and 1.
 
 <strong><em>tfTest/trainModel.py</em></strong>
@@ -42,7 +42,7 @@ model.fit(X_train, Y_train, epochs=4)
 loss, accuracy = model.evaluate(X_test, Y_test)
 print(accuracy)
 ```
-### Testing Real Images
+## Testing Real Images
 I drew a digit and resized it to 28x28 using GNU's Image Manipulation Program (GIMP). Using the opencv-python package, the digit image file was read into memory and converted to an np array. The np array is passed to the model and a prediction is made and displayed using pyplot.
 
 <strong><em>tfTest/loadModelTest.py</em></strong>
@@ -76,16 +76,16 @@ print('Interpretation: {}'.format(np.argmax(prediction)))
 ![ksnip_20220221-125833](https://user-images.githubusercontent.com/74911365/155035705-8a1161e7-c991-4b9d-b0a3-f6a6f12c27c9.png)
 
 
-## Deploy to Google Cloud Platform (GCP) Function
+# Deploy to Google Cloud Platform (GCP) Function
 The challenges associated with deploying a custom TensorFlow model to the cloud are discussed here. I started off with a trained and tested model. The end state is a RESTful Web API that can recieve HTTP POST requests containing image pixel data, and returns the model's prediction of what digit that pixel data represents.
 
-### Saving the Weights in Cloud Storage
+## Saving the Weights in Cloud Storage
 Cloud functions are a great way to bring RESTful functionality to any small script or program. Cloud functions often only have access to small amounts of volatile memory, which can't store a saved model indefinitly. Everytime the function's memory resets (which happens during periods of inactivity) the model needs to be recreated. To achieve this, the weights of the model needed to be saved and stored in non-volatile memory (Google Cloud Storage). This allowed the function to initialize itself by downloading the weights and creating the model after every time the function memory reset.
 
 The weights saved in a Google Cloud Storage Bucket.
 ![image](https://user-images.githubusercontent.com/74911365/155038387-c4bcfcc0-446b-4a42-8d76-48c439bab87a.png)
 
-### Function
+## Function
 This is the function's source code which lives in the cloud. The function's primary objective is to recieve pixel data via an HTTP request, and return the model's prediction.
 
 <strong><em>tfTest/googleCloudFunction.py</em></strong>
@@ -150,7 +150,7 @@ Convert the python list into an np array and reshape to be 28x28. Pass the np ar
 ```
 <!-- The web application's objective is to create an interface for users to draw a digit with their mouse and then display the digit that the model thinks it sees.  -->
 
-### Web Application Frontend
+## Web Application Frontend
 The frontend's objective is to inform users of the functionality of the app and the neural network's capabilities. It also provides an interface (an html canvas) which allows users to draw a number with their mouse, and submit the drawing to the model. Below is an explanation of how the canvas interface was created.
 
 <strong><em>templates/home.html</em></strong>
@@ -248,7 +248,7 @@ function postImageData(uri) {
 }
 ```
 
-### Web Application Backend
+## Web Application Backend
 The backend's objective is to serve the static files to users, capture and clean the canvas data, send the cleaned data to the cloud function, and return the model's prediction back to the frontend.
 
 <strong><em>pages/views.py</em></strong>
@@ -287,11 +287,11 @@ The souce code for all the functions used are located in <strong><em>pages/utils
 functions discussed earlier.
 
 
-## Deploy to Heroku
+# Deploy to Heroku
 Heroku is the web host used for this application. A custom domain was purchased on namecheap.com which is now directly linked to the project. 
 
 ![image](https://user-images.githubusercontent.com/74911365/155045523-69d4445d-2d0f-412b-9cef-97e9062c8909.png)
 ![image](https://user-images.githubusercontent.com/74911365/155045591-a979166c-448b-4a47-a1b4-9e61594891c2.png)
 
 
-## Summary
+# Summary
