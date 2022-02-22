@@ -157,7 +157,7 @@ HTML canvas element added to homepage.
 ```html
 <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
 ```
-<img src="https://user-images.githubusercontent.com/74911365/155042928-d932fff0-efe6-4e99-bc2d-9cc2b97378d6.png" width=500>
+<img src="https://user-images.githubusercontent.com/74911365/155042928-d932fff0-efe6-4e99-bc2d-9cc2b97378d6.png" width=400>
 
 Using javascript select the canvas, and associate it's context with it's height and width (the height and width are hard coded in CSS).
 ```javascript
@@ -176,7 +176,7 @@ document.addEventListener('mousedown', setPosition);
 document.addEventListener('mouseenter', setPosition);
 ```
 
-setPosition is called whenever the mouse button is clicked. The canvas begins to draw on itself at the mouse's current X and Y coordinate. The drawing will only occur if the mouse is located somewhere on the canvas.
+setPosition is called whenever the mouse button is clicked and updates the pos variable declared earlier. Moving the mouse calls the draw function which causes the canvas to draw on itself at the mouse's current X and Y coordinate. The drawing will only occur if the mouse is located somewhere on the canvas.
 
 ```javascript
 function setPosition(e) {
@@ -186,7 +186,26 @@ function setPosition(e) {
     pos.x = e.clientX - x;
     pos.y = e.clientY - y;
 }
+
+function draw(e) {
+  // mouse left button must be pressed
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 10;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'black';
+
+  ctx.moveTo(pos.x, pos.y); // from
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); // to
+
+  ctx.stroke(); // draw it!
+}
 ```
+![image](https://user-images.githubusercontent.com/74911365/155043225-c01fce24-dcea-4d92-ae5f-5c1fda7e61d9.png)
+
 
 
 ### Web Application Backend
