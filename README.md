@@ -289,4 +289,8 @@ functions discussed earlier.
 ## Deploy to Heroku
 Heroku is the web host used for this application. A custom domain was purchased on namecheap.com which is now directly linked to the project. 
 
+![image](https://user-images.githubusercontent.com/74911365/155045523-69d4445d-2d0f-412b-9cef-97e9062c8909.png)
+![image](https://user-images.githubusercontent.com/74911365/155045591-a979166c-448b-4a47-a1b4-9e61594891c2.png)
+
+
 ## Summary
