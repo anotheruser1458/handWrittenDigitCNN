@@ -152,7 +152,8 @@ Convert the python list into an np array and reshape to be 28x28. Pass the np ar
 ### Web Application Frontend
 The frontend's objective is to inform users of the functionality of the app and the neural network's capabilities. It also provides an interface (an html canvas) which allows users to draw a number with their mouse, and submit the drawing to the model. Below is an explanation of how the canvas interface was created.
 
-HTML canvas element added to homepage (home.html)
+<strong><em>templates/home.html</em></strong>
+HTML canvas element added to homepage.
 ```html
 <canvas id="canvas" style="background-color:white;" class="responsive"></canvas>
 ```
